@@ -1,11 +1,15 @@
 name: Patch vulnerable images 
 on: 
- push: 
-   branches: 
-     - main 
-   paths-ignore: 
-     - '**.md' 
  workflow_dispatch: 
+  inputs:
+    image-ref:
+      description: 'Image to scan and patch'
+      required: false
+      default: 'docker.io/php:7.4.3-apache'
+    patched-image-ref:
+      description: 'Image ref of patched image'
+      required: false
+      default: 'docker.io/php:7.4.3-apache-patched'
 jobs: 
  patch: 
    runs-on: ubuntu-latest 
@@ -13,22 +17,6 @@ jobs:
    permissions: 
      contents: read 
      packages: write 
-   strategy: 
-     fail-fast: false 
-     matrix: 
-       # provide relevant list of images to scan on each run 
-       images: 
-         - "docker.io/library/alpine:3.18.4" 
-         - "docker.io/openpolicyagent/opa:0.46.0" 
-         - "docker.io/library/hello-world:latest" 
-         - "docker.io/php:7.4.3-apache" 
-         - "docker.io/library/hello-world:latest" 
-       patched_images: 
-         - "docker.io/library/alpine:3.18.4" 
-         - "docker.io/openpolicyagent/opa:0.46.0" 
-         - "docker.io/library/hello-world:latest" 
-         - "docker.io/php:7.4.3-apache" 
-         - "docker.io/library/hello-world:latest" 
    steps: 
      # generate trivy report for fixable OS package vulnerabilities 
      - name: Generate Trivy Report 
@@ -39,7 +27,7 @@ jobs:
          output: "report.json" 
          ignore-unfixed: true 
          vuln-type: "os" 
-         image-ref: ${{ matrix.images }} 
+         image-ref: ${{ github.event.inputs.image-ref }} 
 
        # check whether there are any OS package vulnerabilities 
      - name: Check vulnerability count 
