@@ -85,8 +85,8 @@ jobs:
        id: vuln_count 
        run: | 
          report_file="report.json" 
-         vuln_count=$(jq 'if .Results then [.Results[] | select(.Class=="os-pkgs" and .Vulnerabilities!=null) | .Vulnerabilities[]] | length else 0 end' "$report_file") 
-         echo "vuln_count=$vuln_count" >> $GITHUB_OUTPUT 
+         vuln_count1=$(jq 'if .Results then [.Results[] | select(.Class=="os-pkgs" and .Vulnerabilities!=null) | .Vulnerabilities[]] | length else 0 end' "$report_file") 
+         echo "vuln_count=$vuln_count1" >> $GITHUB_OUTPUT 
 
          report_file2="report2.json" 
          vuln_count2=$(jq 'if .Results then [.Results[] | select(.Class=="os-pkgs" and .Vulnerabilities!=null) | .Vulnerabilities[]] | length else 0 end' "$report_file2") 
