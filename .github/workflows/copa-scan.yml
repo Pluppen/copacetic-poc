@@ -31,12 +31,12 @@ jobs:
 
       - name: Build an image from Dockerfile
         run: |
-          docker build -t docker.io/pluppen/vulnerable:latest .
+          docker build -t pluppen/vulnerable:latest .
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
         with:
-          image-ref: 'docker.io/pluppen/vulnerable:latest'
+          image-ref: 'pluppen/vulnerable:latest'
           format: 'json'
           output: 'trivy-results.json'
           severity: 'CRITICAL,HIGH'
@@ -44,7 +44,7 @@ jobs:
       - name: Copacetic Action
         uses: project-copacetic/copa-action@v1.2.1
         with:
-          image: 'docker.io/pluppen/vulnerable:latest'
+          image: 'pluppen/vulnerable:latest'
           image-report: 'trivy-results.json'
           patched-tag: 'latest-patched'
 
