@@ -51,6 +51,11 @@ jobs:
          image-report: "report.json" 
          patched-tag: "patched" 
 
+     - name: Retag patched image 
+       if: steps.copa.conclusion == 'success' 
+       run: | 
+         docker tag ${{ steps.copa.outputs.patched-image }} ${{ github.event.inputs.patched-image-ref }}
+
 
      - name: Generate Trivy Report On Patched Image
        if: steps.copa.conclusion == 'success' 
@@ -61,7 +66,7 @@ jobs:
          output: "report2.json" 
          ignore-unfixed: true 
          vuln-type: "os" 
-         image-ref: ${{ matrix.patched_images }} 
+         image-ref: ${{ github.event.inputs.patched-image-ref }} 
          
        # check whether there are any OS package vulnerabilities 
      - name: Check vulnerability count of patched image versus unpatched image
