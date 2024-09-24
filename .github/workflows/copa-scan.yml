@@ -89,5 +89,5 @@ jobs:
          echo "vuln_count=$vuln_count" >> $GITHUB_OUTPUT 
 
          report_file2="report2.json" 
-         vuln_count=$(jq 'if .Results then [.Results[] | select(.Class=="os-pkgs" and .Vulnerabilities!=null) | .Vulnerabilities[]] | length else 0 end' "$report_file2") 
-         echo "vuln_count_patched=$vuln_count" >> $GITHUB_OUTPUT 
+         vuln_count2=$(jq 'if .Results then [.Results[] | select(.Class=="os-pkgs" and .Vulnerabilities!=null) | .Vulnerabilities[]] | length else 0 end' "$report_file2") 
+         echo "vuln_count_patched=$vuln_count2" >> $GITHUB_OUTPUT 
