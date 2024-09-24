@@ -82,12 +82,12 @@ jobs:
          
        # check whether there are any OS package vulnerabilities 
      - name: Check vulnerability count of patched image versus unpatched image
-       id: vuln_count 
+       id: vuln_count2
        run: | 
          report_file="report.json" 
-         vuln_count1=$(jq 'if .Results then [.Results[] | select(.Class=="os-pkgs" and .Vulnerabilities!=null) | .Vulnerabilities[]] | length else 0 end' "$report_file") 
-         echo "vuln_count=$vuln_count1" >> $GITHUB_OUTPUT 
+         vuln_count=$(jq 'if .Results then [.Results[] | select(.Class=="os-pkgs" and .Vulnerabilities!=null) | .Vulnerabilities[]] | length else 0 end' "$report_file") 
+         echo "vuln_count=$vuln_count" >> $GITHUB_OUTPUT 
 
-         report_file2="report2.json" 
-         vuln_count2=$(jq 'if .Results then [.Results[] | select(.Class=="os-pkgs" and .Vulnerabilities!=null) | .Vulnerabilities[]] | length else 0 end' "$report_file2") 
-         echo "vuln_count_patched=$vuln_count2" >> $GITHUB_OUTPUT 
+         report_file="report2.json" 
+         vuln_count=$(jq 'if .Results then [.Results[] | select(.Class=="os-pkgs" and .Vulnerabilities!=null) | .Vulnerabilities[]] | length else 0 end' "$report_file") 
+         echo "vuln_count_patched=$vuln_count" >> $GITHUB_OUTPUT 
