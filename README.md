@@ -2,6 +2,8 @@
 
 This repo shows how [Copasetic](https://github.com/project-copacetic/copacetic) can be implemented in CI pipelines and scripts.
 
+[Example Github Actions Run](https://github.com/Pluppen/copacetic-poc/actions/runs/11014778562/job/30586215805)
+
 ## Quickstart
 
 Run `copa-example.sh` to test the scan & patch flow
